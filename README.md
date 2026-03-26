@@ -2,6 +2,25 @@
 
 ## Problem1 Exclusive Time of Functions (https://leetcode.com/problems/exclusive-time-of-functions/)
 
+class Solution:
+    def exclusiveTime(self, n: int, logs: List[str]) -> List[int]:
+        stack = []
+        res = [0] * n
+
+        for i in logs:
+            log = i.split(":")
+            f_id, event, ts = int(log[0]), log[1], int(log[2])
+            if event == "start":
+                stack.append([int(ts),0])
+            else:
+                start, child = stack.pop()
+                exc = ts - start + 1 - child
+                res[f_id] += exc
+                total_child_time = exc + child
+                if stack:
+                    stack[-1][1] += total_child_time
+        return res
+
 
 
 
